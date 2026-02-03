@@ -77,25 +77,21 @@ const Hero = () => {
       return
     }
 
-    // Get UTM parameters from cookies
     const utmSource = getCookie('utm_source') || ''
     const utmId = getCookie('utm_id') || ''
     const utmS1 = getCookie('utm_s1') || ''
 
-    // Build the redirect URL
-    const baseUrl = 'https://everesttaxrelief.net'
     const params = new URLSearchParams({
-      zip_code: zipCode,
-      referrer: 'tax.assurerates.com',
-      tid: '3108'
+      a: '553',
+      oc: '855',
+      c: '2498',
+      s1: utmSource,
+      s2: utmId,
+      s3: utmS1,
+      s4: zipCode
     })
 
-    // Map UTM parameters to affiliate tracking parameters
-    if (utmSource) params.set('subid', utmSource)
-    if (utmId) params.set('subid2', utmId)
-    if (utmS1) params.set('c1', utmS1)
-
-    const redirectUrl = `${baseUrl}/v5/bd?${params.toString()}`
+    const redirectUrl = `https://mlf-trk.com/?${params.toString()}`
     
     // Redirect to the quote page
     window.location.href = redirectUrl
