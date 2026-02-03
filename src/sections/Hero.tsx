@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
+import { track } from '@vercel/analytics/react'
 
 const Hero = () => {
   const [zipCode, setZipCode] = useState('')
@@ -92,8 +93,9 @@ const Hero = () => {
     })
 
     const redirectUrl = `https://mlf-trk.com/?${params.toString()}`
-    
-    // Redirect to the quote page
+
+    track('zip_submission', { state, zip_code: zipCode })
+
     window.location.href = redirectUrl
   }
 
@@ -117,7 +119,7 @@ const Hero = () => {
     const displayState = state || 'YOUR STATE'
 
   return (
-    <div className='w-full min-h-content sm:min-h-[800px] xl:min-h-[400px] bg-gradient-to-b from-[#8EC4F6] to-[#FFF] flex flex-col relative pb-20 lg:py-20'>
+    <div className='w-full min-h-content sm:min-h-[800px] xl:min-h-[400px] bg-linear-to-b from-[#8EC4F6] to-[#FFF] flex flex-col relative pb-20 lg:py-20'>
       {/* Background Illustration */}
         <div className='w-full absolute right-0 top-[85%] xl:top-1/2 md:top-1/2 transform lg:-translate-y-1/2 z-0 max-w-3xl mx-auto'>
         <Image
@@ -139,22 +141,22 @@ const Hero = () => {
           {/* Content */}
           <div className='max-w-4xl space-y-8 mx-auto lg:mx-0 py-0 lg:py-16'>
             {/* State Update Title */}
-            <p className='text-[#12266D] font-[700] text-base md:text-lg text-center lg:text-left mb-2'>
+            <p className='text-[#12266D] font-bold text-base md:text-lg text-center lg:text-left mb-2'>
               {displayState} UPDATE: {currentDate}
             </p>
             
             {/* Main Title */}
-            <h1 className='text-[32px] font-[800] text-[#12266D] leading-tight text-center lg:text-left max-w-[360px] lg:max-w-none mx-auto lg:mx-0 mb-2'>
+            <h1 className='text-[32px] font-extrabold text-[#12266D] leading-tight text-center lg:text-left max-w-[360px] lg:max-w-none mx-auto lg:mx-0 mb-2'>
               TAX RELIEF OPTIONS UPDATED
             </h1>
             
             {/* Subtitle */}
-            <h2 className='text-[24px] font-[700] text-[#12266D] leading-tight text-center lg:text-left max-w-[360px] lg:max-w-none mx-auto lg:mx-0 mb-6'>
+            <h2 className='text-[24px] font-bold text-[#12266D] leading-tight text-center lg:text-left max-w-[360px] lg:max-w-none mx-auto lg:mx-0 mb-6'>
               CHECK YOUR ELIGIBILITY
             </h2>
             
             <div className='bg-[#12266D] rounded-xl p-6 sm:p-8 max-w-2xl mx-auto lg:mx-0 shadow-2xl'>
-              <p className='text-white font-[600] text-[16px] mb-6'>
+              <p className='text-white font-semibold text-[16px] mb-6'>
                 Eligibility varies. Enter Zip to check eligibility
               </p>
               
@@ -173,14 +175,14 @@ const Hero = () => {
                   }}
                   onKeyPress={handleKeyPress}
                   disabled={isLoadingLocation}
-                  className={`w-full px-4 py-4 text-gray-900 text-[18px] font-[600] rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all duration-200 h-14 ${
+                  className={`w-full px-4 py-4 text-gray-900 text-[18px] font-semibold rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all duration-200 h-14 ${
                     isLoadingLocation ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                 />
                 <button 
                   onClick={handleContinue}
                   disabled={isLoadingLocation || !/^\d{5}$/.test(zipCode)}
-                  className={`w-full px-4 py-4 rounded-lg font-[600] transition-all duration-200 flex items-center justify-center gap-2 text-[18px] h-14 text-white ${
+                  className={`w-full px-4 py-4 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-[18px] h-14 text-white ${
                     isLoadingLocation || !/^\d{5}$/.test(zipCode)
                       ? 'bg-gray-400 cursor-not-allowed' 
                       : 'bg-[#F7782B] hover:bg-[#e06c27]'
@@ -188,12 +190,12 @@ const Hero = () => {
                 >
                   {isLoadingLocation ? (
                     <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin text-white font-[800]"></div>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin text-white font-extrabold"></div>
                       Loading...
                     </>
                   ) : (
                     <>
-                      Check Eligibility <ArrowRight className='w-4 h-4 text-white font-[600]' />
+                      Check Eligibility <ArrowRight className='w-4 h-4 text-white font-semibold' />
                     </>
                   )}
                 </button>
@@ -214,14 +216,14 @@ const Hero = () => {
                   }}
                   onKeyPress={handleKeyPress}
                   disabled={isLoadingLocation}
-                  className={`w-full px-4 py-4 pr-32 text-gray-900 text-[18px] font-[600] rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all duration-200 h-18 ${
+                  className={`w-full px-4 py-4 pr-32 text-gray-900 text-[18px] font-semibold rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all duration-200 h-18 ${
                     isLoadingLocation ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                 />
                 <button 
                   onClick={handleContinue}
                   disabled={isLoadingLocation || !/^\d{5}$/.test(zipCode)}
-                  className={`absolute right-0 top-0 px-14 py-2 rounded-r-lg font-[600] transition-all duration-200 flex items-center gap-2 text-[18px] h-18 text-white ${
+                  className={`absolute right-0 top-0 px-14 py-2 rounded-r-lg font-semibold transition-all duration-200 flex items-center gap-2 text-[18px] h-18 text-white ${
                     isLoadingLocation || !/^\d{5}$/.test(zipCode)
                       ? 'bg-gray-400 cursor-not-allowed' 
                       : 'bg-[#F7782B] hover:bg-[#e06c27]'
@@ -229,12 +231,12 @@ const Hero = () => {
                 >
                   {isLoadingLocation ? (
                     <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin text-white font-[800]"></div>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin text-white font-extrabold"></div>
                       Loading...
                     </>
                   ) : (
                     <>
-                      Check Eligibility <ArrowRight className='w-4 h-4 text-white font-[600]' />
+                      Check Eligibility <ArrowRight className='w-4 h-4 text-white font-semibold' />
                     </>
                   )}
                 </button>
