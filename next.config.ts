@@ -12,11 +12,8 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   
-  // Enable experimental features for better performance
   experimental: {
     optimizePackageImports: ['lucide-react', '@vercel/analytics', '@vercel/speed-insights'],
-    // Enable response cache optimization
-    serverComponentsHmrCache: true,
   },
   
   // Optimize production builds

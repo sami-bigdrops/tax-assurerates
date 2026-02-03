@@ -21,15 +21,16 @@ const Footer = dynamic(() => import('@/sections/Footer'), {
 
 export default function Home() {
   return (
-    <main className="h-screen flex flex-col overflow-hidden">
-      <div className="flex-1 overflow-y-auto">
-        {/* Content will go here - scroll will only appear if content exceeds viewport */}
+    <main className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col">
         <Navbar />
-        <Hero />
-        <Partners />
-        <Features />
-        <Footer />
+        <div className="flex-1 flex flex-col min-h-0">
+          <Hero />
+          <Partners />
+        </div>
       </div>
+      <Features />
+      <Footer />
     </main>
   );
 }

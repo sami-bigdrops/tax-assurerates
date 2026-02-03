@@ -119,133 +119,112 @@ const Hero = () => {
     const displayState = state || 'YOUR STATE'
 
   return (
-    <div className='w-full min-h-content sm:min-h-[800px] xl:min-h-[400px] bg-linear-to-b from-[#8EC4F6] to-[#FFF] flex flex-col relative pb-20 lg:py-20'>
-      {/* Background Illustration */}
-        <div className='w-full absolute right-0 top-[85%] xl:top-1/2 md:top-1/2 transform lg:-translate-y-1/2 z-0 max-w-3xl mx-auto'>
-        <Image
-          width={1000}
-          height={1000}
-          src='/landing-illustration.svg'
-          alt='Modern city skyline with eco-friendly buildings'
-          className='w-full h-auto max-h-[1000px] sm:max-h-[400px] lg:max-h-[700px] xl:max-h-[700px] object-contain'
-          priority
-          quality={90}
-          loading="eager"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-      </div>
-
-        {/* Main Content Section */}
-        <div className='w-full flex-1 flex items-start justify-center lg:justify-start px-8 sm:px-24 lg:px-32 xl:py-12 py-8 relative z-10'>
-        <div className='w-full'>
-          {/* Content */}
-          <div className='max-w-4xl space-y-8 mx-auto lg:mx-0 py-0 lg:py-16'>
-            {/* State Update Title */}
-            <p className='text-[#12266D] font-bold text-base md:text-lg text-center lg:text-left mb-2'>
-              {displayState} UPDATE: {currentDate}
+    <section className='flex-1 min-h-0 w-full flex flex-col justify-center bg-linear-to-b from-[#8EC4F6] to-[#FFF] mask-b-from-90% md:mask-b-from-95% lg:mask-b-from-85% py-8 px-4 md:py-16 xl:px-0'>
+      <div className='w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12'>
+        <div className='w-full lg:w-1/2 space-y-6'>
+          <p className='text-[#12266D] font-bold text-base md:text-lg text-center lg:text-left mb-2'>
+            {displayState} UPDATE: {currentDate}
+          </p>
+          <h1 className='text-[32px] font-extrabold text-[#12266D] leading-tight text-center lg:text-left max-w-[360px] lg:max-w-none mx-auto lg:mx-0 mb-2'>
+            TAX RELIEF OPTIONS UPDATED
+          </h1>
+          <h2 className='text-[24px] font-bold text-[#12266D] leading-tight text-center lg:text-left max-w-[360px] lg:max-w-none mx-auto lg:mx-0 mb-6'>
+            CHECK YOUR ELIGIBILITY
+          </h2>
+          <div className='bg-[#12266D] rounded-xl p-6 sm:p-8 max-w-2xl mx-auto lg:mx-0 shadow-2xl'>
+            <p className='text-white font-semibold text-[16px] mb-6'>
+              Eligibility varies. Enter Zip to check eligibility
             </p>
-            
-            {/* Main Title */}
-            <h1 className='text-[32px] font-extrabold text-[#12266D] leading-tight text-center lg:text-left max-w-[360px] lg:max-w-none mx-auto lg:mx-0 mb-2'>
-              TAX RELIEF OPTIONS UPDATED
-            </h1>
-            
-            {/* Subtitle */}
-            <h2 className='text-[24px] font-bold text-[#12266D] leading-tight text-center lg:text-left max-w-[360px] lg:max-w-none mx-auto lg:mx-0 mb-6'>
-              CHECK YOUR ELIGIBILITY
-            </h2>
-            
-            <div className='bg-[#12266D] rounded-xl p-6 sm:p-8 max-w-2xl mx-auto lg:mx-0 shadow-2xl'>
-              <p className='text-white font-semibold text-[16px] mb-6'>
-                Eligibility varies. Enter Zip to check eligibility
-              </p>
-              
-              {/* Mobile: Stacked layout */}
-              <div className='block sm:hidden space-y-4'>
-                <input
-                  type='text'
-                  placeholder={isLoadingLocation ? 'Detecting your location...' : 'Zip Code e.g. 11102'}
-                  value={zipCode}
-                  onChange={(e) => {
-                    const value = e.target.value
-                    // Only allow digits and limit to 5 characters
-                    if (/^\d{0,5}$/.test(value)) {
-                      setZipCode(value)
-                    }
-                  }}
-                  onKeyPress={handleKeyPress}
-                  disabled={isLoadingLocation}
-                  className={`w-full px-4 py-4 text-gray-900 text-[18px] font-semibold rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all duration-200 h-14 ${
-                    isLoadingLocation ? 'opacity-50 cursor-not-allowed' : ''
-                  }`}
-                />
-                <button 
-                  onClick={handleContinue}
-                  disabled={isLoadingLocation || !/^\d{5}$/.test(zipCode)}
-                  className={`w-full px-4 py-4 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-[18px] h-14 text-white ${
-                    isLoadingLocation || !/^\d{5}$/.test(zipCode)
-                      ? 'bg-gray-400 cursor-not-allowed' 
-                      : 'bg-[#F7782B] hover:bg-[#e06c27]'
-                  }`}
-                >
-                  {isLoadingLocation ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin text-white font-extrabold"></div>
-                      Loading...
-                    </>
-                  ) : (
-                    <>
-                      Check Eligibility <ArrowRight className='w-4 h-4 text-white font-semibold' />
-                    </>
-                  )}
-                </button>
-              </div>
-
-              {/* Tablet and Desktop: Button inside input */}
-              <div className='hidden sm:block relative'>
-                <input
-                  type='text'
-                  placeholder={isLoadingLocation ? 'Detecting your location...' : 'Zip Code e.g. 11102'}
-                  value={zipCode}
-                  onChange={(e) => {
-                    const value = e.target.value
-                    // Only allow digits and limit to 5 characters
-                    if (/^\d{0,5}$/.test(value)) {
-                      setZipCode(value)
-                    }
-                  }}
-                  onKeyPress={handleKeyPress}
-                  disabled={isLoadingLocation}
-                  className={`w-full px-4 py-4 pr-32 text-gray-900 text-[18px] font-semibold rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all duration-200 h-18 ${
-                    isLoadingLocation ? 'opacity-50 cursor-not-allowed' : ''
-                  }`}
-                />
-                <button 
-                  onClick={handleContinue}
-                  disabled={isLoadingLocation || !/^\d{5}$/.test(zipCode)}
-                  className={`absolute right-0 top-0 px-14 py-2 rounded-r-lg font-semibold transition-all duration-200 flex items-center gap-2 text-[18px] h-18 text-white ${
-                    isLoadingLocation || !/^\d{5}$/.test(zipCode)
-                      ? 'bg-gray-400 cursor-not-allowed' 
-                      : 'bg-[#F7782B] hover:bg-[#e06c27]'
-                  }`}
-                >
-                  {isLoadingLocation ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin text-white font-extrabold"></div>
-                      Loading...
-                    </>
-                  ) : (
-                    <>
-                      Check Eligibility <ArrowRight className='w-4 h-4 text-white font-semibold' />
-                    </>
-                  )}
-                </button>
-              </div>
+            <div className='block sm:hidden space-y-4'>
+              <input
+                type='text'
+                placeholder={isLoadingLocation ? 'Detecting your location...' : 'Zip Code e.g. 11102'}
+                value={zipCode}
+                onChange={(e) => {
+                  const value = e.target.value
+                  if (/^\d{0,5}$/.test(value)) {
+                    setZipCode(value)
+                  }
+                }}
+                onKeyPress={handleKeyPress}
+                disabled={isLoadingLocation}
+                className={`w-full px-4 py-4 text-gray-900 text-[18px] font-semibold rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all duration-200 h-14 ${
+                  isLoadingLocation ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+              />
+              <button
+                onClick={handleContinue}
+                disabled={isLoadingLocation || !/^\d{5}$/.test(zipCode)}
+                className={`w-full px-4 py-4 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-[18px] h-14 text-white ${
+                  isLoadingLocation || !/^\d{5}$/.test(zipCode)
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-[#F7782B] hover:bg-[#e06c27]'
+                }`}
+              >
+                {isLoadingLocation ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin text-white font-extrabold"></div>
+                    Loading...
+                  </>
+                ) : (
+                  <>
+                    Check Eligibility <ArrowRight className='w-4 h-4 text-white font-semibold' />
+                  </>
+                )}
+              </button>
+            </div>
+            <div className='hidden sm:block relative'>
+              <input
+                type='text'
+                placeholder={isLoadingLocation ? 'Detecting your location...' : 'Zip Code e.g. 11102'}
+                value={zipCode}
+                onChange={(e) => {
+                  const value = e.target.value
+                  if (/^\d{0,5}$/.test(value)) {
+                    setZipCode(value)
+                  }
+                }}
+                onKeyPress={handleKeyPress}
+                disabled={isLoadingLocation}
+                className={`w-full px-4 py-4 pr-32 text-gray-900 text-[18px] font-semibold rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition-all duration-200 h-18 ${
+                  isLoadingLocation ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+              />
+              <button
+                onClick={handleContinue}
+                disabled={isLoadingLocation || !/^\d{5}$/.test(zipCode)}
+                className={`absolute right-0 top-0 px-14 py-2 rounded-r-lg font-semibold transition-all duration-200 flex items-center gap-2 text-[18px] h-18 text-white ${
+                  isLoadingLocation || !/^\d{5}$/.test(zipCode)
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-[#F7782B] hover:bg-[#e06c27]'
+                }`}
+              >
+                {isLoadingLocation ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin text-white font-extrabold"></div>
+                    Loading...
+                  </>
+                ) : (
+                  <>
+                    Check Eligibility <ArrowRight className='w-4 h-4 text-white font-semibold' />
+                  </>
+                )}
+              </button>
             </div>
           </div>
         </div>
+        <div className='w-full lg:w-1/2 flex justify-center shrink-0'>
+          <Image
+            src="/tax-illustration.svg"
+            alt="Modern city skyline with eco-friendly buildings"
+            width={800}
+            height={800}
+            priority
+            className='w-full max-w-2xl h-auto object-contain'
+          />
+        </div>
       </div>
-    </div>
+    </section>
   )
 }
 
