@@ -9,6 +9,7 @@ const Hero = () => {
   const [zipCode, setZipCode] = useState('')
   const [isLoadingLocation, setIsLoadingLocation] = useState(false)
   const [state, setState] = useState('YOUR STATE')
+  const [city, setCity] = useState('YOUR CITY')
 
   // Function to fetch user location using server-side IP detection (same as LeadProsper)
   const fetchUserLocation = useCallback(async () => {
@@ -30,6 +31,7 @@ const Hero = () => {
       
       if (data.city && data.zipCode) {
         setZipCode(data.zipCode)
+        setCity(data.city)
       } else {
         // Keep empty if location not available
         setZipCode('')
@@ -38,6 +40,11 @@ const Hero = () => {
         setState(data.state)
       } else {
         setState('YOUR STATE')
+      }
+      if (data.city) {
+        setCity(data.city)
+      } else {
+        setCity('YOUR CITY')
       }
     } catch {
       // Keep empty on error  
@@ -106,34 +113,16 @@ const Hero = () => {
     }
   }
 
-    // Format date as "JAN 19, 2026"
-    const formatDate = (date: Date): string => {
-      const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-      const month = months[date.getMonth()]
-      const day = date.getDate()
-      const year = date.getFullYear()
-      return `${month} ${day}, ${year}`
-    }
-  
-    const currentDate = formatDate(new Date())
-    const displayState = state || 'YOUR STATE'
-
   return (
     <section className='flex-1 min-h-0 w-full flex flex-col justify-center bg-linear-to-b from-[#8EC4F6] to-[#FFF] mask-b-from-90% md:mask-b-from-95% lg:mask-b-from-85% py-8 px-4 md:py-16 xl:px-0'>
       <div className='w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12'>
         <div className='w-full lg:w-1/2 space-y-6'>
-          <p className='text-[#12266D] font-bold text-base md:text-lg text-center lg:text-left mb-2'>
-            {displayState} UPDATE: {currentDate}
-          </p>
-          <h1 className='text-[32px] font-extrabold text-[#12266D] leading-tight text-center lg:text-left max-w-[360px] lg:max-w-none mx-auto lg:mx-0 mb-2'>
-            TAX RELIEF OPTIONS UPDATED
+          <h1 className='text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#12266D] leading-tight text-center lg:text-left max-w-[360px] lg:max-w-none mx-auto lg:mx-0'>
+            Save thousands in your tax liabilities{city && city !== 'YOUR CITY' ? ` in ${city}` : ''}
           </h1>
-          <h2 className='text-[24px] font-bold text-[#12266D] leading-tight text-center lg:text-left max-w-[360px] lg:max-w-none mx-auto lg:mx-0 mb-6'>
-            CHECK YOUR ELIGIBILITY
-          </h2>
           <div className='bg-[#12266D] rounded-xl p-6 sm:p-8 max-w-2xl mx-auto lg:mx-0 shadow-2xl'>
             <p className='text-white font-semibold text-[16px] mb-6'>
-              Eligibility varies. Enter Zip to check eligibility
+              What is your ZIP Code?
             </p>
             <div className='block sm:hidden space-y-4'>
               <input
